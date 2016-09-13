@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title>Calc</title>
+    <style type="text/css">
+      table {
+        border: 1px solid;
+        border-collapse: collapse;
+        font-size: 130%;
+        font-family: 'Courier';
+      }
+      table td {
+        border: 1px solid;
+        padding: 15px;
+      }
+      table td:not(#result):hover {
+        cursor: pointer;
+        background: #ccc;
+      }
+    </style>
+    <script type="text/javascript">
+      var Calc = {
+        add: function(operand1, operand2) {
+          return operand1 + operand2;       
+        },
+        substract: function(operand1, operand2) {
+          return operand1 - operand2;       
+        },
+        multiply: function(operand1, operand2) {
+          return operand1 * operand2;       
+        },
+        divide: function(operand1, operand2) {
+          return operand1 / operand2;       
+        },
+        dispatch: function(operand1, operand2, operation) {
+          switch(operation) {
+            case "+":
+              return this.add(operand1, operand2);
+              break;
+            case "-":
+              return this.substract(operand1, operand2);
+              break;
+            case "*":
+              return this.multiply(operand1, operand2);
+              break;
+            case "/":
+              return this.divide(operand1, operand2);
+              break;
+          }
+        }
+      }  
+    </script>
+  </head>
+  <body>
+    <h1>Calc</h1>
+    <table>
+      <tr>
+        <td 
+          style="text-align: right;"
+          id="result"
+          colspan="4">0</td>
+      </tr>
+      <tr>
+        <td class="digit">7</td>
+        <td class="digit">8</td>
+        <td class="digit">9</td>
+        <td class="operation">/</td>
+      </tr>
+      <tr>
+        <td class="digit">4</td>
+        <td class="digit">5</td>
+        <td class="digit">6</td>
+        <td class="operation">*</td>
+      </tr>
+      <tr>
+        <td class="digit">1</td>
+        <td class="digit">2</td>
+        <td class="digit">3</td>
+        <td class="operation">-</td>
+      </tr>
+      <tr>
+        <td 
+          style="text-align: center" 
+          colspan="3" 
+          class="digit">0</td>
+        <td class="operation">+</td>
+      </tr>
+    </table>
+  </body>
+</html>
