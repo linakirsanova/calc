@@ -46,8 +46,32 @@
               return this.divide(operand1, operand2);
               break;
           }
-        }
-      }  
+        },
+        bindClickDigitEvent: function() {
+          var digits = document.querySelectorAll(".digit");
+
+          for (var i = 0; i < digits.length; i++) {
+            digits[i].addEventListener("click", function(event) {
+              // Integer
+              var digit = parseInt(event.toElement.innerText);
+
+              Calc.operands.push(digit);
+
+              if(Calc.operands.length === 2) {
+
+              } else {
+
+              }
+            });
+          }
+        },
+        operands: [], 
+        operation: ""
+      }
+
+      document.addEventListener("DOMContentLoaded", function(event) { 
+        Calc.bindClickDigitEvent();
+      });
     </script>
   </head>
   <body>
