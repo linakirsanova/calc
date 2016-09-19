@@ -10,11 +10,14 @@
       }
       table td {
         border: 1px solid;
-        padding: 15px;
+        padding: 15px 20px;
       }
       table td:not(#result):hover {
         cursor: pointer;
         background: #ccc;
+      }
+      td#equals, td.operation {
+        background: orange;
       }
     </style>
     <script type="text/javascript">
@@ -32,38 +35,64 @@
           return operand1 / operand2;       
         },
         dispatch: function(operand1, operand2, operation) {
+          var operand1Int = parseInt(operand1);
+          var operand2Int = parseInt(operand2);
+
           switch(operation) {
             case "+":
-              return this.add(operand1, operand2);
+              return this.add(operand1Int, operand2Int);
               break;
             case "-":
-              return this.substract(operand1, operand2);
+              return this.substract(operand1Int, operand2Int);
               break;
             case "*":
-              return this.multiply(operand1, operand2);
+              return this.multiply(operand1Int, operand2Int);
               break;
             case "/":
-              return this.divide(operand1, operand2);
+              return this.divide(operand1Int, operand2Int);
               break;
           }
         },
         bindClickDigitEvent: function() {
           var digits = document.querySelectorAll(".digit");
 
-          for (var i = 0; i < digits.length; i++) {
+          for(var i = 0; i < digits.length; i++) {
             digits[i].addEventListener("click", function(event) {
               // Integer
               var digit = parseInt(event.toElement.innerText);
-
-              Calc.operands.push(digit);
-
-              if(Calc.operands.length === 2) {
-
-              } else {
-
+              if (Calc.operands.length === 0) {
+                Calc.operands.push("" + digit);
               }
+              else {
+                var temp = Calc.operands.pop();
+
+                Calc.operands.push(temp + digit);
+              }
+
+              var lastNum = Calc.operands[Calc.operands.length - 1];
+              document.getElementById("result").innerText = lastNum;
             });
           }
+        },
+        bindClickOperationEvent: function() {
+          var operations = document.querySelectorAll(".operation");
+
+          for(var i = 0; i < operations.length; i++) {
+            operations[i].addEventListener("click", function(event) {
+              Calc.operation = event.toElement.innerText;
+
+              Calc.operands.push("");
+            });
+          }
+        },
+        bindClickEqualsEvent: function() {
+          var equals = document.getElementById("equals");
+
+          equals.addEventListener("click", function(event) {
+            var result = Calc.dispatch(Calc.operands[0], Calc.operands[1], Calc.operation);
+
+            document.getElementById("result").innerText = result; 
+          });
         },
         operands: [], 
         operation: ""
@@ -71,6 +100,8 @@
 
       document.addEventListener("DOMContentLoaded", function(event) { 
         Calc.bindClickDigitEvent();
+        Calc.bindClickOperationEvent();
+        Calc.bindClickEqualsEvent();
       });
     </script>
   </head>
@@ -84,29 +115,34 @@
           colspan="4">0</td>
       </tr>
       <tr>
+        <td colspan="3" id="clear">AC</td>
+        <td class="operation">/</td>
+      </tr>
+      <tr>
         <td class="digit">7</td>
         <td class="digit">8</td>
         <td class="digit">9</td>
-        <td class="operation">/</td>
+        <td class="operation">*</td>
       </tr>
       <tr>
         <td class="digit">4</td>
         <td class="digit">5</td>
         <td class="digit">6</td>
-        <td class="operation">*</td>
+        <td class="operation">-</td>
       </tr>
       <tr>
         <td class="digit">1</td>
         <td class="digit">2</td>
         <td class="digit">3</td>
-        <td class="operation">-</td>
+        <td class="operation">+</td>
       </tr>
       <tr>
         <td 
           style="text-align: center" 
-          colspan="3" 
+          colspan="2" 
           class="digit">0</td>
-        <td class="operation">+</td>
+        <td>,</td>
+        <td id="equals">=</td>
       </tr>
     </table>
   </body>
