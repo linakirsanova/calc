@@ -94,6 +94,15 @@
             document.getElementById("result").innerText = result; 
           });
         },
+        bindClickClearEvent: function() { 
+          var clear = document.getElementById("clear"); 
+
+          clear.addEventListener("click", function(event) { 
+            Calc.operands = []; 
+            Calc.operation = ""; 
+            document.getElementById("result").innerText = '0'; 
+          }); 
+        },
         operands: [], 
         operation: ""
       }
@@ -102,6 +111,7 @@
         Calc.bindClickDigitEvent();
         Calc.bindClickOperationEvent();
         Calc.bindClickEqualsEvent();
+        Calc.bindClickClearEvent();
       });
     </script>
   </head>
